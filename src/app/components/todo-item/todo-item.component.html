@@ -1,1 +1,13 @@
-<p>todo-item works!</p>
+<h2>UserName</h2>
+
+<label for="search">Search todo: </label>
+<input type="text" id="search" #criteria
+       (input)="updateCriteria(criteria.value)"
+       placeholder="Search heroes">
+
+<mat-selection-list #todos [multiple]="false" [@filterAnimation]="todosTotal">
+  <mat-list-option *ngFor="let item of todos" [value]="item">
+    <span class="badge">{{ item.id }}</span>
+      <span>{{ item.title }}</span>
+  </mat-list-option>
+</mat-selection-list>

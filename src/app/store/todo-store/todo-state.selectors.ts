@@ -1,5 +1,5 @@
 import { Selector } from '@ngxs/store';
-import { ITodoListItem } from '../core/models/todo-list-item.interface';
+import { ITodoListItem } from '../../core/models/todo-list-item.interface';
 import { TodoListState, TodoStateModel } from './todo.state';
 
 export class TodoStateSelectors {
