@@ -1,0 +1,11 @@
+.form-wrapper {
+  height: 100%;
+
+  form {
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
