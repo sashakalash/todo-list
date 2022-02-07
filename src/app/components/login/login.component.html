@@ -1,0 +1,22 @@
+<mat-card class="form-wrapper">
+  <form [formGroup]="form"
+        (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Login</mat-label>
+      <input matInput
+             placeholder="login"
+             [formControl]="$any(form).controls['login']"
+             required>
+      <mat-error *ngIf="form.get('login')?.hasError">Required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput
+             placeholder="password"
+             [formControl]="$any(form).controls['password']"
+             required>
+      <mat-error *ngIf="form.get('password')?.hasError">Required</mat-error>
+    </mat-form-field>
+    <button mat-raised-button type="submit">Вход</button>
+  </form>
+</mat-card>

@@ -1,0 +1,5 @@
+<cmp-header></cmp-header>
+<cmp-slide-panel *ngIf="isOpen$ | async">
+  <cmp-todo-create-form></cmp-todo-create-form>
+</cmp-slide-panel>
+<router-outlet></router-outlet>

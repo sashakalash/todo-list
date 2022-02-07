@@ -3,7 +3,9 @@ import { CanActivate } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { AuthStateSelectors } from 'src/app/store/auth-store/auth-state.selectors';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AdminGuard implements CanActivate {
 
   constructor(private store: Store) {}

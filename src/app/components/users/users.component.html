@@ -1,0 +1,9 @@
+<mat-card>
+  <mat-selection-list #shoes
+                      [multiple]="false">
+    <mat-list-option *ngFor="let user of users$ | async"
+                     [value]="user">
+      {{user}}
+    </mat-list-option>
+  </mat-selection-list>
+</mat-card>

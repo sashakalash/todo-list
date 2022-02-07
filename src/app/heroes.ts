@@ -13,3 +13,11 @@ export const HEROES: ITodoListItem[] = [
   { id: 19, title: 'Magma', createdAt: new Date(), deadline: new Date(), status: TodoStatusEnum.CREATED },
   { id: 20, title: 'Tornado', createdAt: new Date(), deadline: new Date(), status: TodoStatusEnum.CREATED }
 ];
+
+export const USERS: string[] = [
+  'Kelly Capwell',
+  'C.C. Capwell',
+  'Cruz Castillo',
+  'Eden Capwell',
+  'Peter Flint'
+];

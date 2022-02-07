@@ -5,19 +5,22 @@ import { AuthActions } from './auth-state.actions';
 import { Observable, tap } from 'rxjs';
 import { IToken } from 'src/app/core/models/token.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { USERS } from 'src/app/heroes';
 
 const TODOS_STATE_TOKEN = new StateToken<IAuth>('auth');
 
 export interface AuthStateModel {
   token: string | null;
-  username: string | null;
+  currentUser: string | null;
+  users: string[];
 }
 
 @State<AuthStateModel>({
   name: TODOS_STATE_TOKEN,
   defaults: {
     token: null,
-    username: null
+    currentUser: null,
+    users: USERS
   }
 })
 
@@ -32,7 +35,8 @@ export class AuthState {
       tap((result: IToken) => {
         ctx.patchState({
           token: result.token,
-          username: payload.login
+          currentUser: payload.login,
+          users: USERS
         });
       })
     );
@@ -43,7 +47,8 @@ export class AuthState {
     this.authService.logout();
     ctx.setState({
       token: null,
-      username: null
+      currentUser: null,
+      users: USERS
     });
   }
 }
