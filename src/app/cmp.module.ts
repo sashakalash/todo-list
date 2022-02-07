@@ -19,6 +19,10 @@ import { TodoCreateFormComponent } from './components/todo-create-form/todo-crea
 import { TodoListComponent } from './components/todo-list/todo-list.component';
 import { CmpRoutingModule } from './cmp-routing.module';
 import { CmpComponent } from './cmp.component';
+import { ContentWrapperComponent } from './components/content-wrapper/content-wrapper.component';
+import { HeaderComponent } from './components/header/header.component';
+import { UsersComponent } from './components/users/users.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,10 @@ import { CmpComponent } from './cmp.component';
     NotFoundComponent,
     SlidePanelComponent,
     TodoCreateFormComponent,
-    TodoListComponent
+    TodoListComponent,
+    ContentWrapperComponent,
+    HeaderComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +53,9 @@ import { CmpComponent } from './cmp.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' }
+  ],
   bootstrap: [CmpComponent],
   entryComponents: [SlidePanelComponent]
 })

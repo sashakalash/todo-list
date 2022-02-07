@@ -1,1 +1,47 @@
-<form (ngSubmit)="onSubmit()"></form>
+<mat-card>
+  <form [formGroup]="form">
+    <mat-form-field appearance="fill">
+      <mat-label>Title</mat-label>
+      <input matInput
+             placeholder="Enter title"
+             formControlName="title">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Created</mat-label>
+      <input matInput
+             [matDatepicker]="createdPicker"
+             formControlName="createdAt">
+      <mat-datepicker-toggle matSuffix
+                             [for]="createdPicker"></mat-datepicker-toggle>
+      <mat-datepicker #createdPicker></mat-datepicker>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="fill">
+      <mat-label>Deadline</mat-label>
+      <input matInput
+             [matDatepicker]="deadlinePicker"
+             formControlName="deadline">
+      <mat-datepicker-toggle matSuffix
+                             [for]="deadlinePicker"></mat-datepicker-toggle>
+      <mat-datepicker #deadlinePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Status</mat-label>
+      <input matInput
+             formControlName="status">
+    </mat-form-field>
+
+    <div class="actions-wrapper">
+      <button mat-raised-button
+              color="primary"
+              [disabled]="form.invalid"
+              (click)="create()">Create</button>
+      <button mat-raised-button
+              color="warn"
+              (click)="cancel()">Cancel</button>
+    </div>
+  </form>
+</mat-card>

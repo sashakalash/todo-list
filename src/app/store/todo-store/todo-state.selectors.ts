@@ -13,4 +13,9 @@ export class TodoStateSelectors {
   static selectTodoItem(state: TodoStateModel, idx: number): ITodoListItem | undefined {
     return state.todoList.find(i => i.id === idx);
   }
+
+  @Selector([TodoListState])
+  static selectPanelState(state: TodoStateModel): boolean {
+    return state.isPanelOpen;
+  }
 }

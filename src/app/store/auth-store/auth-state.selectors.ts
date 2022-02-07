@@ -17,4 +17,14 @@ export class AuthStateSelectors {
   static isAdmin(state: AuthStateModel): boolean {
     return !!state.token?.includes('admin');
   }
+
+  @Selector([AuthState])
+  static selectUserName(state: AuthStateModel): string {
+    return state.currentUser ?? 'Guest';
+  }
+
+  @Selector([AuthState])
+  static selectAllUsers(state: AuthStateModel): string[] {
+    return state.users ?? [];
+  }
 }
