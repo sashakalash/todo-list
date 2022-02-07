@@ -3,6 +3,7 @@ import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import { ITodoListItem } from '../../core/models/todo-list-item.interface';
 import { TodoActions, TodoPanelActions } from './todo-state.actions';
 import { patch, removeItem, insertItem, updateItem } from '@ngxs/store/operators';
+import { HEROES } from 'src/app/heroes';
 
 const TODOS_STATE_TOKEN = new StateToken<ITodoListItem[]>('todos');
 
@@ -14,7 +15,7 @@ export interface TodoStateModel {
 @State<TodoStateModel>({
   name: TODOS_STATE_TOKEN,
   defaults: {
-    todoList: [],
+    todoList: HEROES,
     isPanelOpen: false
   }
 })

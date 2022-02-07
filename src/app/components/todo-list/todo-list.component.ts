@@ -1,7 +1,10 @@
+import { Observable, of } from 'rxjs';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { ITodoListItem } from 'src/app/core/models/todo-list-item.interface';
-import { HEROES } from 'src/app/heroes';
+import { Store } from '@ngxs/store';
+
+import * as fromRoot from 'src/app/store';
 
 @Component({
   selector: 'cmp-todo-list',
@@ -41,30 +44,37 @@ import { HEROES } from 'src/app/heroes';
 })
 export class TodoListComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private store: Store,
+  ) {}
 
   @HostBinding('@todos')
   public animatePage = true;
 
-  todosTotal = -1;
+  public todosTotal = -1;
+  public userName$: Observable<string> | undefined;
 
-  get todos(): ITodoListItem[] { return this._todos; }
-  private _todos: ITodoListItem[] = [];
+  get todos$(): Observable<ITodoListItem[]> {
+    return this._todos$;
+  }
+
+  private _todos$: Observable<ITodoListItem[]> = of([]);
 
   ngOnInit(): void {
-    this._todos = HEROES;
+    this._todos$ = this.store.select(fromRoot.TodoState.TodoStateSelectors.selectAllTodos);
+    this.userName$ = this.store.select(fromRoot.AuthState.AuthStateSelectors.selectUserName);
   }
 
   updateCriteria(criteria: string): void {
     criteria = criteria ? criteria.trim() : '';
 
-    this._todos = HEROES.filter(todo => todo.title.toLowerCase().includes(criteria.toLowerCase()));
-    const newTotal = this.todos.length;
+    // this._todos = HEROES.filter(todo => todo.title.toLowerCase().includes(criteria.toLowerCase()));
+    // // const newTotal = this.todos.length;
 
-    if (this.todosTotal !== newTotal) {
-      this.todosTotal = newTotal;
-    } else if (!criteria) {
-      this.todosTotal = -1;
-    }
+    // if (this.todosTotal !== newTotal) {
+    //   this.todosTotal = newTotal;
+    // } else if (!criteria) {
+    //   this.todosTotal = -1;
+    // }
   }
 }
