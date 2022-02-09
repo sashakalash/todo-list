@@ -30,15 +30,18 @@
 
     <mat-form-field appearance="fill">
       <mat-label>Status</mat-label>
-      <input matInput
-             formControlName="status">
+      <mat-select [formControlName]="'status'">
+        <mat-option *ngFor="let status of STATUSES" [value]="status">
+          {{status}}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
 
     <div class="actions-wrapper">
       <button mat-raised-button
               color="primary"
               [disabled]="form.invalid"
-              (click)="create()">Create</button>
+              (click)="save()">{{ isEdit ? "Save" : "Create" }}</button>
       <button mat-raised-button
               color="warn"
               (click)="cancel()">Cancel</button>

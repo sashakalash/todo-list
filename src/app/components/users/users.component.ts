@@ -20,4 +20,8 @@ export class UsersComponent implements OnInit {
     this.users$ = this.store.select(fromRoot.AuthState.AuthStateSelectors.selectAllUsers)
   }
 
+  public chooseUser(user: string): void {
+    this.store.dispatch(new fromRoot.TodoState.CommonTodoActions.SetCurrentUser(user));
+  }
+
 }

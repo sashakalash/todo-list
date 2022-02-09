@@ -1,10 +1,11 @@
-import { TodoActions, TodoPanelActions } from './todo-state.actions';
-import { TodoStateSelectors } from './todo-state.selectors';
+import { CommonTodoActions, TodoPanelActions } from './todo-state.actions';
+import { CommonTodoStateSelectors, TodoStateSelectors } from './todo-state.selectors';
 import { TodoListState } from './todo.state';
 
 export {
-  TodoActions,
   TodoStateSelectors,
   TodoListState,
-  TodoPanelActions
+  TodoPanelActions,
+  CommonTodoActions,
+  CommonTodoStateSelectors
 };

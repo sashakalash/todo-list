@@ -51,5 +51,12 @@ export class AuthState {
       users: USERS
     });
   }
+
+  @Action(AuthActions.SetCurrentUser)
+  setCurrentUser(ctx: StateContext<AuthStateModel>, { user }: AuthActions.SetCurrentUser): void {
+    ctx.patchState({
+      currentUser: user,
+    });
+  }
 }
 

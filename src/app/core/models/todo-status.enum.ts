@@ -3,5 +3,5 @@ export enum TodoStatusEnum {
   COMPLETED = 'COMPLETED',
   FAILED = 'FAILED',
   CREATED = 'CREATED',
-  DELAYED= 'DELAYED'
+  DELAYED = 'DELAYED'
 }

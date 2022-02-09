@@ -1,5 +1,5 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'cmp-slide-panel',
@@ -15,17 +15,8 @@ import { Component, OnInit } from '@angular/core';
     ])
   ]
 })
-export class SlidePanelComponent implements OnInit {
+export class SlidePanelComponent {
 
 
-  constructor() {
-
-  }
-
-  ngOnInit(): void {
-    console.log()
-  }
-
-
-
+  constructor() {}
 }
