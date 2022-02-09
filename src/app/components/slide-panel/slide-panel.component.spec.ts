@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SlidePanelComponent } from './slide-panel.component';
 
 describe('SlidePanelComponent', () => {
-  let component: SlidePanelComponent;
+  // let component: SlidePanelComponent;
   let fixture: ComponentFixture<SlidePanelComponent>;
 
   beforeEach(async () => {
@@ -15,7 +15,7 @@ describe('SlidePanelComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SlidePanelComponent);
-    component = fixture.componentInstance;
+    // component = fixture.componentInstance;
     fixture.detectChanges();
   });
 });

@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TodoListComponent } from './todo-list.component';
 
 describe('TodoListComponent', () => {
-  let component: TodoListComponent;
+  // let component: TodoListComponent;
   let fixture: ComponentFixture<TodoListComponent>;
 
   beforeEach(async () => {
@@ -15,7 +15,7 @@ describe('TodoListComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TodoListComponent);
-    component = fixture.componentInstance;
+    // component = fixture.componentInstance;
     fixture.detectChanges();
   });
 });

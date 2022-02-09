@@ -18,17 +18,7 @@
                 *ngFor="let item of todos">
         <mat-list-item role="listitem"
                        class="item">
-          <mat-card>
-            <span>{{ item.title }}</span>
-            <div class="action-btns">
-              <button mat-stroked-button>
-                <mat-icon (click)="edit(item)">edit</mat-icon>
-              </button>
-              <button mat-stroked-button>
-                <mat-icon (click)="remove(item.id)">close</mat-icon>
-              </button>
-            </div>
-          </mat-card>
+          <cmp-todo-item [item]="item"></cmp-todo-item>
         </mat-list-item>
       </mat-list>
     </ng-container>

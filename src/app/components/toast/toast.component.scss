@@ -1,0 +1,28 @@
+.wrapper {
+  position: absolute;
+  bottom: 0;
+  width: 30%;
+  height: 50px;
+  z-index: 9;
+  background: chocolate;
+  right: 0;
+  left: 0;
+  margin: auto;
+  padding: 10px;
+  border-radius: 2%;
+  display: flex;
+  justify-content: space-between;
+
+  mat-icon {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+
+    &:active {
+      font-size: 99%;
+      opacity: 0.7;
+    }
+  }
+}

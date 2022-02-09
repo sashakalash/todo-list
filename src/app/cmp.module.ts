@@ -23,6 +23,9 @@ import { ContentWrapperComponent } from './components/content-wrapper/content-wr
 import { HeaderComponent } from './components/header/header.component';
 import { UsersComponent } from './components/users/users.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { TodoStatusDirective } from './directives/todo-status.directive';
+import { ToastDirective } from './directives/toast.directive';
+import { ToastComponent } from './components/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,10 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     TodoListComponent,
     ContentWrapperComponent,
     HeaderComponent,
-    UsersComponent
+    UsersComponent,
+    TodoStatusDirective,
+    ToastDirective,
+    ToastComponent
   ],
   imports: [
     BrowserModule,

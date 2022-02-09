@@ -1,4 +1,4 @@
-import { map, Observable, of, Subject, switchMap, takeUntil, tap } from 'rxjs';
+import { Observable, of, Subject, takeUntil } from 'rxjs';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 import { Component, HostBinding, OnDestroy } from '@angular/core';
 import { ITodoListItem } from 'src/app/core/models/todo-list-item.interface';
@@ -74,7 +74,7 @@ export class TodoListComponent implements OnDestroy {
   }
 
   public updateCriteria(criteria: string): void {
-    criteria = criteria ? criteria.trim() : '';
+    // criteria = criteria ? criteria.trim() : '';
 
     // this._todos = HEROES.filter(todo => todo.title.toLowerCase().includes(criteria.toLowerCase()));
     // // const newTotal = this.todos.length;
@@ -86,12 +86,5 @@ export class TodoListComponent implements OnDestroy {
     // }
   }
 
-  public remove(id: number): void {
-    this.store.dispatch(new fromRoot.TodoState.CommonTodoActions.RemoveTodoItem({ id }));
-  }
 
-  public edit(item: ITodoListItem): void {
-    this.store.dispatch(new fromRoot.TodoState.CommonTodoActions.SetCurrentTodoItem(item));
-    this.store.dispatch(new fromRoot.TodoState.TodoPanelActions.ChangePanelVisibility());
-  }
 }
