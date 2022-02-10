@@ -17,7 +17,7 @@ export class UsersComponent implements OnInit {
   public isCurrentUser$!: Observable<boolean>;
 
   ngOnInit(): void {
-    this.users$ = this.store.select(fromRoot.AuthState.AuthStateSelectors.selectAllUsers)
+    this.users$ = this.store.select(fromRoot.AuthState.AuthStateSelectors.selectAllUsers);
   }
 
   public chooseUser(user: string): void {
