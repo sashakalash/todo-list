@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ContentWrapperComponent } from './content-wrapper.component';
 
 describe('ContentWrapperComponent', () => {
-  let component: ContentWrapperComponent;
+  // let component: ContentWrapperComponent;
   let fixture: ComponentFixture<ContentWrapperComponent>;
 
   beforeEach(async () => {
@@ -15,7 +15,7 @@ describe('ContentWrapperComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ContentWrapperComponent);
-    component = fixture.componentInstance;
+    // component = fixture.componentInstance;
     fixture.detectChanges();
   });
 

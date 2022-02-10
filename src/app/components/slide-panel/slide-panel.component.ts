@@ -1,6 +1,9 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { fromEvent, Observable } from 'rxjs';
 
+import * as fromRoot from 'src/app/store';
 @Component({
   selector: 'cmp-slide-panel',
   templateUrl: './slide-panel.component.html',
@@ -15,17 +18,28 @@ import { Component, OnInit } from '@angular/core';
     ])
   ]
 })
-export class SlidePanelComponent implements OnInit {
+export class SlidePanelComponent {
 
-
-  constructor() {
-
+  @ViewChild('panel') set panelRef(ref: ElementRef) {
+    if (ref) {
+      this.panelEl = ref;
+      this.subscribePanelClick();
+    }
   }
 
-  ngOnInit(): void {
-    console.log()
+  constructor(
+    public store: Store,
+  ) {
+    this.isOpen$ = this.store.select(fromRoot.TodoState.CommonTodoStateSelectors.selectPanelState);
   }
 
+  public isOpen$: Observable<boolean>;
+  private panelEl: ElementRef;
 
-
+  private subscribePanelClick() {
+    if (this.panelEl) {
+      (fromEvent(this.panelEl.nativeElement as HTMLElement, 'click')).
+        subscribe(() => this.store.dispatch(new fromRoot.TodoState.TodoPanelActions.ChangePanelVisibility()));
+    }
+  }
 }

@@ -1,5 +1,7 @@
 mat-card {
   height: 100%;
+  width: 40%;
+
   form {
     display: flex;
     flex-direction: column;
@@ -10,4 +12,3 @@ mat-card {
     }
   }
 }
-

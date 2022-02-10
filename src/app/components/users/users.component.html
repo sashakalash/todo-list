@@ -2,7 +2,9 @@
   <mat-selection-list #shoes
                       [multiple]="false">
     <mat-list-option *ngFor="let user of users$ | async"
-                     [value]="user">
+                     [routerLink]="['/todos']"
+                     [queryParams]="{user}"
+                     (click)="chooseUser(user)">
       {{user}}
     </mat-list-option>
   </mat-selection-list>

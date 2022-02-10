@@ -8,7 +8,7 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { NotificationShowerDirective } from './directives/notification-shower.directive';
-import { TodoListState } from './store/todo-store/todo.state';
+import { CommonTodoListState } from './store/todo-store/todo.state';
 import { MaterialModule } from './material.module';
 import { AuthState } from './store/auth-store/auth.state';
 import { LoginComponent } from './components/login/login.component';
@@ -23,6 +23,10 @@ import { ContentWrapperComponent } from './components/content-wrapper/content-wr
 import { HeaderComponent } from './components/header/header.component';
 import { UsersComponent } from './components/users/users.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { TodoStatusDirective } from './directives/todo-status.directive';
+import { ToastDirective } from './directives/toast.directive';
+import { ToastComponent } from './components/toast/toast.component';
+import { FormState } from './store/form-store';
 
 @NgModule({
   declarations: [
@@ -36,12 +40,15 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     TodoListComponent,
     ContentWrapperComponent,
     HeaderComponent,
-    UsersComponent
+    UsersComponent,
+    TodoStatusDirective,
+    ToastDirective,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
     CmpRoutingModule,
-    NgxsModule.forRoot([TodoListState, AuthState], {
+    NgxsModule.forRoot([CommonTodoListState, FormState, AuthState], {
       developmentMode: !environment.production
     }),
     NgxsStoragePluginModule.forRoot({

@@ -1,28 +1,29 @@
-<mat-card class="example-card">
+<mat-card>
   <mat-card-header>
-    <div mat-card-avatar
-         class="example-header-image"></div>
     <mat-card-title>{{ userName$ | async }}</mat-card-title>
     <mat-card-subtitle>Todo List</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content>
-    <mat-form-field class="example-full-width"
-                    appearance="fill">
-      <mat-label>Search todo:</mat-label>
-      <input matInput
-             placeholder="Start typing..."
-             #criteria
-             (input)="updateCriteria(criteria.value)">
-    </mat-form-field>
-    <mat-list #todos
-              role="list"
-              [@filterAnimation]="todosTotal"
-              *ngFor="let item of todos$ | async">
-      <mat-list-item role="listitem"
-                     class="item">
-        <span class="badge">{{ item.id }}</span>
-        <span>{{ item.title }}</span>
-      </mat-list-item>
-    </mat-list>
+  <mat-card-content *ngIf="todos$ | async as todos">
+    <ng-container *ngIf="todos.length;else emptyListTemplate">
+      <mat-form-field appearance="fill">
+        <mat-label>Search todo:</mat-label>
+        <input matInput
+               placeholder="Start typing..."
+               #criteria
+               (input)="updateCriteria(criteria.value)">
+      </mat-form-field>
+      <mat-list #todos
+                role="list"
+                [@filterAnimation]="todosTotal"
+                *ngFor="let item of todos">
+        <mat-list-item role="listitem"
+                       class="item">
+          <cmp-todo-item [item]="item"></cmp-todo-item>
+        </mat-list-item>
+      </mat-list>
+    </ng-container>
+    <ng-template #emptyListTemplate>
+      <span>It seems there is no TODO yet...</span>
+    </ng-template>
   </mat-card-content>
 </mat-card>

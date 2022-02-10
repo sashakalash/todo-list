@@ -3,7 +3,7 @@ import { IAuth } from './../../core/models/auth.interface';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthActions } from 'src/app/store/auth-store';
+import * as fromRoot from 'src/app/store';
 
 @Component({
   selector: 'cmp-login',
@@ -27,7 +27,8 @@ export class LoginComponent {
 
   public onSubmit(): void {
     const value: IAuth = this.form.value;
-    this.store.dispatch(new AuthActions.Login(value));
+    this.store.dispatch(new fromRoot.AuthState.AuthActions.Login(value));
+    this.store.dispatch(new fromRoot.TodoState.CommonTodoActions.SetCurrentUser(value.login))
     this.router.navigate(['todos']);
   }
 

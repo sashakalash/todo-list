@@ -1,4 +1,4 @@
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { Component, OnInit } from '@angular/core';
 
@@ -17,7 +17,11 @@ export class UsersComponent implements OnInit {
   public isCurrentUser$!: Observable<boolean>;
 
   ngOnInit(): void {
-    this.users$ = this.store.select(fromRoot.AuthState.AuthStateSelectors.selectAllUsers)
+    this.users$ = this.store.select(fromRoot.AuthState.AuthStateSelectors.selectAllUsers);
+  }
+
+  public chooseUser(user: string): void {
+    this.store.dispatch(new fromRoot.TodoState.CommonTodoActions.SetCurrentUser(user));
   }
 
 }

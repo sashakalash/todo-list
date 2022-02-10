@@ -1,54 +1,106 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import { ITodoListItem } from '../../core/models/todo-list-item.interface';
-import { TodoActions, TodoPanelActions } from './todo-state.actions';
+import { CommonTodoActions, TodoPanelActions } from './todo-state.actions';
 import { patch, removeItem, insertItem, updateItem } from '@ngxs/store/operators';
 import { HEROES } from 'src/app/heroes';
 
-const TODOS_STATE_TOKEN = new StateToken<ITodoListItem[]>('todos');
-
+const COMMON_TODOS_STATE_TOKEN = new StateToken<CommonTodoStateModel>('commonTodos');
 export interface TodoStateModel {
+  user: string;
   todoList: ITodoListItem[];
-  isPanelOpen: boolean;
 }
-
-@State<TodoStateModel>({
-  name: TODOS_STATE_TOKEN,
+export interface CommonTodoStateModel {
+  isPanelOpen: boolean;
+  commonTodos: TodoStateModel[];
+  currentUser: string;
+  currentTodoItem: ITodoListItem;
+}
+@State<CommonTodoStateModel>({
+  name: COMMON_TODOS_STATE_TOKEN,
   defaults: {
-    todoList: HEROES,
-    isPanelOpen: false
+    commonTodos: [],
+    isPanelOpen: false,
+    currentUser: '',
+    currentTodoItem: null as any
   }
 })
 
 @Injectable()
-export class TodoListState {
-  @Action(TodoActions.Add)
-  addTodoItemToList(ctx: StateContext<TodoStateModel>, { payload }: TodoActions.Add): void {
+export class CommonTodoListState {
+
+  @Action(CommonTodoActions.RemoveTodoItem)
+  removeTodoItem(ctx: StateContext<CommonTodoStateModel>, { payload }: CommonTodoActions.RemoveTodoItem): void {
+    const state = ctx.getState();
     ctx.setState(patch({
-      todoList: insertItem(payload)
+      commonTodos: updateItem<TodoStateModel>(
+        item => item?.user === state.currentUser,
+        patch({
+          todoList: removeItem<ITodoListItem>(item => item?.id === payload.id)
+        })
+      )
     }));
   }
 
-  @Action(TodoActions.Remove)
-  removeTodoItemFromList(ctx: StateContext<TodoStateModel>, { payload }: TodoActions.Remove): void {
+  @Action(CommonTodoActions.EditTodoItem)
+  editTodoItem(ctx: StateContext<CommonTodoStateModel>, { payload }: CommonTodoActions.EditTodoItem): void {
+    const state = ctx.getState();
     ctx.setState(patch({
-      todoList: removeItem<ITodoListItem>(item => item?.id === payload.id)
+      commonTodos: updateItem<TodoStateModel>(
+        item => item?.user === state.currentUser,
+        patch({
+          todoList: updateItem<ITodoListItem>(
+            item => item?.id === payload.id,
+            patch(payload)
+          )
+        })
+      )
     }));
   }
 
-  @Action(TodoActions.Add)
-  editTodoItemToList(ctx: StateContext<TodoStateModel>, { payload }: TodoActions.Add): void {
+  @Action(CommonTodoActions.AddTodoItem)
+  addTodoItem(ctx: StateContext<CommonTodoStateModel>, { payload }: CommonTodoActions.AddTodoItem): void {
+    const state = ctx.getState();
+    const existingUser = state.commonTodos.find(item => item.user === state.currentUser);
+    if (!existingUser) {
+      ctx.setState(patch({
+        commonTodos: insertItem<TodoStateModel>({
+          user: state.currentUser,
+          todoList: [payload]
+        }),
+      }));
+    } else {
+      ctx.setState(patch({
+        commonTodos: updateItem<TodoStateModel>(
+          item => item?.user === state.currentUser,
+          patch({
+            todoList: insertItem<ITodoListItem>(payload)
+          })
+        )
+      }));
+    }
+  }
+
+  @Action(CommonTodoActions.SetCurrentUser)
+  setCurrentUser(ctx: StateContext<CommonTodoStateModel>, { user }: CommonTodoActions.SetCurrentUser): void {
     ctx.setState(patch({
-      todoList: updateItem<ITodoListItem>(item => item?.id === payload.id, payload)
+      currentUser: user
     }));
   }
 
   @Action(TodoPanelActions.ChangePanelVisibility)
-  changeTodoPanelVisibilityStatus(ctx: StateContext<TodoStateModel>): void {
+  changeTodoPanelVisibilityStatus(ctx: StateContext<CommonTodoStateModel>): void {
     const state = ctx.getState();
-    ctx.setState({
-      ...state,
+    ctx.setState(patch({
       isPanelOpen: !state.isPanelOpen
-    });
+    })
+    );
+  }
+
+  @Action(CommonTodoActions.SetCurrentTodoItem)
+  setCurrentTodoItem(ctx: StateContext<CommonTodoStateModel>, { todo }: CommonTodoActions.SetCurrentTodoItem): void {
+    ctx.setState(patch({
+      currentTodoItem: todo
+    }));
   }
 }
