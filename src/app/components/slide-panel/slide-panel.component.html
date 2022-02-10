@@ -1,3 +1,6 @@
-<div [@flyInOut]="'in'" class="form-wrapper">
+<div [@flyInOut]="'in'"
+     class="form-wrapper"
+     #panel
+     *ngIf="isOpen$ | async">
   <ng-content></ng-content>
 </div>

@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card (click)="$event.stopPropagation()">
   <form [formGroup]="form">
     <mat-form-field appearance="fill">
       <mat-label>Title</mat-label>
@@ -24,7 +24,8 @@
              [matDatepicker]="deadlinePicker"
              formControlName="deadline">
       <mat-datepicker-toggle matSuffix
-                             [for]="deadlinePicker"></mat-datepicker-toggle>
+                             [for]="deadlinePicker"
+                             ></mat-datepicker-toggle>
       <mat-datepicker #deadlinePicker></mat-datepicker>
     </mat-form-field>
 

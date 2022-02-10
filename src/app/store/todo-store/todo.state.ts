@@ -4,23 +4,10 @@ import { ITodoListItem } from '../../core/models/todo-list-item.interface';
 import { CommonTodoActions, TodoPanelActions } from './todo-state.actions';
 import { patch, removeItem, insertItem, updateItem } from '@ngxs/store/operators';
 
-const TODOS_STATE_TOKEN = new StateToken<TodoStateModel>('todos');
 const COMMON_TODOS_STATE_TOKEN = new StateToken<CommonTodoStateModel>('commonTodos');
 export interface TodoStateModel {
   user: string;
   todoList: ITodoListItem[];
-}
-@State<TodoStateModel>({
-  name: TODOS_STATE_TOKEN,
-  defaults: {
-    user: '',
-    todoList: []
-  }
-})
-
-@Injectable()
-export class TodoListState {
-
 }
 export interface CommonTodoStateModel {
   isPanelOpen: boolean;
@@ -35,8 +22,7 @@ export interface CommonTodoStateModel {
     isPanelOpen: false,
     currentUser: '',
     currentTodoItem: null as any
-  },
-  children: [TodoListState]
+  }
 })
 
 @Injectable()
@@ -71,8 +57,8 @@ export class CommonTodoListState {
     }));
   }
 
-  @Action(CommonTodoActions.addTodoItem)
-  addTodoItem(ctx: StateContext<CommonTodoStateModel>, { payload }: CommonTodoActions.addTodoItem): void {
+  @Action(CommonTodoActions.AddTodoItem)
+  addTodoItem(ctx: StateContext<CommonTodoStateModel>, { payload }: CommonTodoActions.AddTodoItem): void {
     const state = ctx.getState();
     const existingUser = state.commonTodos.find(item => item.user === state.currentUser);
     if (!existingUser) {

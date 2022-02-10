@@ -51,6 +51,7 @@
           }
         ],
         "quotes": ["error", "single"],
+        "semi": ["error", "always"],
         "for-direction": "error",
         "no-async-promise-executor": "error",
         "no-case-declarations": "error",
@@ -152,7 +153,7 @@
         "@angular-eslint/directive-class-suffix": "error",
         "@angular-eslint/no-conflicting-lifecycle": "error",
         "@angular-eslint/no-host-metadata-property": "error",
-        "@angular-eslint/no-input-rename": "error",
+        "@angular-eslint/no-input-rename": "off",
         "@angular-eslint/no-inputs-metadata-property": "error",
         "@angular-eslint/no-output-native": "error",
         "@angular-eslint/no-output-on-prefix": "error",

@@ -1,7 +1,8 @@
 <div class="wrapper"
-     [@flyInOut]="'in'">
-  <div>
-    <p>What's your favorite animal?</p>
+     [@flyInOut]="'in'"
+     *appToast="data; let text = text">
+  <div class="text">
+    <p>{{ text }}</p>
   </div>
   <mat-icon>close</mat-icon>
 </div>

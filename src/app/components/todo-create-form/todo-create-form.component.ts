@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Store } from '@ngxs/store';
 import { filter, Subject, takeUntil, tap } from 'rxjs';
 import { ITodoListItem } from 'src/app/core/models/todo-list-item.interface';
@@ -33,16 +34,19 @@ export class TodoCreateFormComponent implements OnDestroy {
         tap(() => this.isEdit = true)
       )
       .subscribe(item => this.fillForm(item));
+    this.form.valueChanges
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(() => this.store.dispatch(new fromRoot.FormState.FormActions.TouchedStatusChanged(this.form.untouched)));
   }
 
   public form: FormGroup;
   private currentUser: string;
-  private currentTodoItem: ITodoListItem;
   private destroyed$ = new Subject<void>();
   public readonly STATUSES = Object.keys(TodoStatusEnum);
   public isEdit: boolean;
 
   private closePanel(): void {
+    this.form.reset();
     this.store.dispatch(new fromRoot.TodoState.TodoPanelActions.ChangePanelVisibility());
   }
 
@@ -63,7 +67,7 @@ export class TodoCreateFormComponent implements OnDestroy {
   public save(): void {
     this.isEdit
       ? this.store.dispatch(new fromRoot.TodoState.CommonTodoActions.EditTodoItem(this.form.getRawValue() as ITodoListItem))
-      : this.store.dispatch(new fromRoot.TodoState.CommonTodoActions.addTodoItem(this.form.getRawValue() as ITodoListItem));
+      : this.store.dispatch(new fromRoot.TodoState.CommonTodoActions.AddTodoItem(this.form.getRawValue() as ITodoListItem));
     this.closePanel();
   }
 }

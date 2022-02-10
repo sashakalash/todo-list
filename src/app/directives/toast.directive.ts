@@ -1,27 +1,20 @@
-import { Directive, ElementRef, Input, TemplateRef, ViewContainerRef } from '@angular/core';
-
+import { Directive, Input, TemplateRef, ViewContainerRef, OnInit } from '@angular/core';
+import { INotificationData } from '../core/models/notification-data.interface';
 @Directive({
   selector: '[appToast]'
 })
-export class ToastDirective {
+export class ToastDirective implements OnInit {
 
   constructor(
-    private elementRef: ElementRef,
     private templateRef: TemplateRef<any>,
     private viewContainer: ViewContainerRef,
-  ) {
-    // this.elementRef.nativeElement.style.position = 'absolute';
+  ) {}
 
-  }
+  @Input('appToast') data: INotificationData;
 
-  @Input() set appToast(condition: boolean) {
-    if (condition) {
-      // setTimeout(() => this.viewContainer.createEmbeddedView(this.templateRef), 1000);
-      // setTimeout(() => this.viewContainer.clear(), 3000);
-      this.viewContainer.createEmbeddedView(this.templateRef);
-    } else {
-      this.viewContainer.clear();
-    }
+  ngOnInit(): void {
+    this.viewContainer.createEmbeddedView(this.templateRef, this.data);
+    setTimeout(() => this.viewContainer.clear(), this.data.delay);
   }
 
 }

@@ -1,9 +1,4 @@
-import { Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
-
-import * as fromRoot from 'src/app/store'
-
 @Component({
   selector: 'cmp-content-wrapper',
   templateUrl: './content-wrapper.component.html',
@@ -11,12 +6,5 @@ import * as fromRoot from 'src/app/store'
 })
 export class ContentWrapperComponent {
 
-  constructor(
-    public store: Store,
-  ) {
-    this.isOpen$ = this.store.select(fromRoot.TodoState.CommonTodoStateSelectors.selectPanelState)
-  }
-
-  public isOpen$: Observable<boolean>;
-
+  constructor() {}
 }

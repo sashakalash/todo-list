@@ -1,16 +1,6 @@
 import { Selector } from '@ngxs/store';
 import { ITodoListItem } from '../../core/models/todo-list-item.interface';
-import { CommonTodoListState, CommonTodoStateModel, TodoListState, TodoStateModel } from './todo.state';
-
-export class TodoStateSelectors {
-
-  @Selector([TodoListState])
-  static selectTodoItem(state: TodoStateModel, idx: number): ITodoListItem | undefined {
-    return state.todoList.find(i => i.id === idx);
-  }
-}
-
-
+import { CommonTodoListState, CommonTodoStateModel, TodoStateModel } from './todo.state';
 export class CommonTodoStateSelectors {
 
   @Selector([CommonTodoListState])

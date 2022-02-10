@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 import { TodoStatusEnum } from '../core/models/todo-status.enum';
 
 export const statusToBackgroundColorMap: Map<TodoStatusEnum, string> = new Map([
@@ -12,12 +12,14 @@ export const statusToBackgroundColorMap: Map<TodoStatusEnum, string> = new Map([
 @Directive({
   selector: '[appTodoStatus]'
 })
-export class TodoStatusDirective {
+export class TodoStatusDirective implements OnInit {
 
-  @Input() set appTodoStatus(status: TodoStatusEnum) {
-    this.elementRef.nativeElement.style.background = statusToBackgroundColorMap.get(status);
+  @Input('appTodoStatus') status: TodoStatusEnum;
+
+  constructor(private elementRef: ElementRef) {}
+
+  ngOnInit(): void {
+    this.elementRef.nativeElement.style.background = statusToBackgroundColorMap.get(this.status);
   }
-
-  constructor(private elementRef: ElementRef) { }
 
 }

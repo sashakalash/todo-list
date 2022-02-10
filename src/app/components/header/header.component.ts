@@ -24,7 +24,8 @@ export class HeaderComponent {
     this.router.navigate(['login']);
   }
 
-  public showPanel(): void {
+  public showPanel(e: Event): void {
+    e.stopPropagation();
     this.store.dispatch(new fromRoot.TodoState.TodoPanelActions.ChangePanelVisibility());
   }
 }

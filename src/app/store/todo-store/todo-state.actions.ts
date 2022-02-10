@@ -16,7 +16,7 @@ export namespace TodoPanelActions {
 }
 
 export namespace CommonTodoActions {
-  export class addTodoItem {
+  export class AddTodoItem {
     static readonly type = TodoActionsTypes.ADD_ONE;
     constructor(public payload: ITodoListItem) {}
   }
