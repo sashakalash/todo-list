@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
-import { NotificationShowerDirective } from './directives/notification-shower.directive';
 import { CommonTodoListState } from './store/todo-store/todo.state';
 import { MaterialModule } from './material.module';
 import { AuthState } from './store/auth-store/auth.state';
@@ -32,7 +31,6 @@ import { FormState } from './store/form-store';
   declarations: [
     CmpComponent,
     TodoItemComponent,
-    NotificationShowerDirective,
     LoginComponent,
     NotFoundComponent,
     SlidePanelComponent,

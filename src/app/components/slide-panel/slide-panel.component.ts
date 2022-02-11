@@ -39,7 +39,11 @@ export class SlidePanelComponent {
   private subscribePanelClick() {
     if (this.panelEl) {
       (fromEvent(this.panelEl.nativeElement as HTMLElement, 'click')).
-        subscribe(() => this.store.dispatch(new fromRoot.TodoState.TodoPanelActions.ChangePanelVisibility()));
+        subscribe(() => this.closePanel());
     }
+  }
+
+  private closePanel(): void {
+    this.store.dispatch(new fromRoot.TodoState.TodoPanelActions.ChangePanelVisibility());
   }
 }

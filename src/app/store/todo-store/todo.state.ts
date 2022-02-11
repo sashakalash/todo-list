@@ -1,3 +1,4 @@
+import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
 import { ITodoListItem } from '../../core/models/todo-list-item.interface';
@@ -43,9 +44,9 @@ export class CommonTodoListState {
   }
 
   @Action(CommonTodoActions.EditTodoItem)
-  editTodoItem(ctx: StateContext<CommonTodoStateModel>, { payload }: CommonTodoActions.EditTodoItem): void {
+  editTodoItem(ctx: StateContext<CommonTodoStateModel>, { payload }: CommonTodoActions.EditTodoItem): Observable<CommonTodoStateModel>  {
     const state = ctx.getState();
-    ctx.setState(patch({
+    return of(ctx.setState(patch({
       commonTodos: updateItem<TodoStateModel>(
         item => item?.user === state.currentUser,
         patch({
@@ -55,29 +56,29 @@ export class CommonTodoListState {
           )
         })
       )
-    }));
+    })));
   }
 
   @Action(CommonTodoActions.AddTodoItem)
-  addTodoItem(ctx: StateContext<CommonTodoStateModel>, { payload }: CommonTodoActions.AddTodoItem): void {
+  addTodoItem(ctx: StateContext<CommonTodoStateModel>, { payload }: CommonTodoActions.AddTodoItem): Observable<CommonTodoStateModel> {
     const state = ctx.getState();
     const existingUser = state.commonTodos.find(item => item.user === state.currentUser);
     if (!existingUser) {
-      ctx.setState(patch({
+      return of(ctx.setState(patch({
         commonTodos: insertItem<TodoStateModel>({
           user: state.currentUser,
           todoList: [payload]
         }),
-      }));
+      })));
     } else {
-      ctx.setState(patch({
+      return of(ctx.setState(patch({
         commonTodos: updateItem<TodoStateModel>(
           item => item?.user === state.currentUser,
           patch({
             todoList: insertItem<ITodoListItem>(payload)
           })
         )
-      }));
+      })));
     }
   }
 
