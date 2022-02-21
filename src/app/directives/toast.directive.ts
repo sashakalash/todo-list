@@ -14,7 +14,6 @@ export class ToastDirective implements OnInit {
 
   ngOnInit(): void {
     this.viewContainer.createEmbeddedView(this.templateRef, this.data);
-    setTimeout(() => this.viewContainer.clear(), this.data.delay);
   }
 
 }

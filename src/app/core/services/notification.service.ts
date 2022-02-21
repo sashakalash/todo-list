@@ -1,5 +1,7 @@
-import { INotificationData } from 'src/app/core/models/notification-data.interface';
+import { ComponentType } from '@angular/cdk/portal';
 import { ComponentFactoryResolver, Injectable, ViewContainerRef } from '@angular/core';
+
+import { INotificationData } from 'src/app/core/models/notification-data.interface';
 import { ToastComponent } from 'src/app/components/toast/toast.component';
 @Injectable({
   providedIn: 'root'
@@ -8,20 +10,26 @@ export class NotificationService {
 
   constructor(private factoryResolver: ComponentFactoryResolver) {}
 
-  private rootViewContainer: ViewContainerRef;
   private data: INotificationData;
+  public host: ViewContainerRef;
 
-  private addDynamicComponent(): void {
-    const factory = this.factoryResolver.resolveComponentFactory(ToastComponent);
-    const component = factory.create(this.rootViewContainer.injector);
-    component.instance.data = this.data;
-
-    this.rootViewContainer.insert(component.hostView);
+  private addDynamicComponent(component: ComponentType<ToastComponent>): void {
+    const factory = this.factoryResolver.resolveComponentFactory(component);
+    const notification = factory.create(this.host.injector);
+    notification.instance.data = this.data;
+    this.host.insert(notification.hostView);
+    this.host.element.nativeElement.parentElement.classList.toggle('host');
   }
 
-  public showNotification(rootViewContainer: ViewContainerRef, data: INotificationData): void {
-    this.rootViewContainer = rootViewContainer;
+  public showNotification(component: ComponentType<ToastComponent>, data: INotificationData): void {
     this.data = data;
-    this.addDynamicComponent();
+    this.addDynamicComponent(component);
+    setTimeout(() => this.hideNotification(), this.data.delay);
   }
+
+  public hideNotification(): void {
+    this.host.element.nativeElement.parentElement.classList.toggle('host');
+    this.host.clear();
+  }
+
 }

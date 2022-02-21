@@ -1,3 +1,4 @@
+import { ToastComponent } from 'src/app/components/toast/toast.component';
 import { INotificationData } from 'src/app/core/models/notification-data.interface';
 import { Component, OnDestroy, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -22,7 +23,6 @@ export class TodoCreateFormComponent implements OnDestroy {
     private fb: FormBuilder,
     private store: Store,
     private notificationService: NotificationService,
-    public viewContainerRef: ViewContainerRef,
     private formService: FormService,
   ) {
     this.form = this.formService.createForm();
@@ -85,7 +85,7 @@ export class TodoCreateFormComponent implements OnDestroy {
 
   private showNotification(): void {
     const data: INotificationData = { delay: 3000, text: this.isEdit ? 'Successfully Saved!' : 'Successfully Created!' };
-    this.notificationService.showNotification(this.viewContainerRef, data);
+    this.notificationService.showNotification(ToastComponent, data);
   }
 
   ngOnDestroy(): void {

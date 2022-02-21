@@ -26,6 +26,7 @@ import { TodoStatusDirective } from './directives/todo-status.directive';
 import { ToastDirective } from './directives/toast.directive';
 import { ToastComponent } from './components/toast/toast.component';
 import { FormState } from './store/form-store';
+import { NotificationsHostComponent } from './components/notifications-host/notifications-host.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { FormState } from './store/form-store';
     UsersComponent,
     TodoStatusDirective,
     ToastDirective,
-    ToastComponent
+    ToastComponent,
+    NotificationsHostComponent
   ],
   imports: [
     BrowserModule,

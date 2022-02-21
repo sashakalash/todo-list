@@ -1,7 +1,7 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { fromEvent, Observable } from 'rxjs';
+import { Observable, tap, distinctUntilChanged, fromEvent } from 'rxjs';
 
 import * as fromRoot from 'src/app/store';
 @Component({
@@ -30,7 +30,10 @@ export class SlidePanelComponent {
   constructor(
     public store: Store,
   ) {
-    this.isOpen$ = this.store.select(fromRoot.TodoState.CommonTodoStateSelectors.selectPanelState);
+    this.isOpen$ = this.store.select(fromRoot.TodoState.CommonTodoStateSelectors.selectPanelState)
+      .pipe(
+        distinctUntilChanged(),
+        tap(v => console.log(v)));
   }
 
   public isOpen$: Observable<boolean>;
