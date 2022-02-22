@@ -7,11 +7,11 @@ export enum TodoActionsTypes {
   CHANGE_PANEL_VISIBILITY = '[TodoList] Change Todo Panel Visibility',
   SET_CURRENT_USER = '[TodoList] Set Current User',
   SET_CURRENT_TODO_ITEM = '[TodoList] Set Current Todo Item',
-  CLEAR_CURRENT_TODOS = '[TodoList] Clear Current Todos',
 }
 export namespace TodoPanelActions {
   export class ChangePanelVisibility {
     static readonly type = TodoActionsTypes.CHANGE_PANEL_VISIBILITY;
+    constructor(public payload: boolean) {}
   }
 }
 
@@ -35,12 +35,8 @@ export namespace CommonTodoActions {
     static readonly type = TodoActionsTypes.SET_CURRENT_USER;
     constructor(public user: string) {}
   }
-
-  export class ClearCurrentTodos {
-    static readonly type = TodoActionsTypes.CLEAR_CURRENT_TODOS;
-  }
   export class SetCurrentTodoItem {
     static readonly type = TodoActionsTypes.SET_CURRENT_TODO_ITEM;
-    constructor(public todo: ITodoListItem) {}
+    constructor(public todo: ITodoListItem | null) {}
   }
 }

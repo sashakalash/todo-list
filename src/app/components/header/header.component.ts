@@ -26,6 +26,6 @@ export class HeaderComponent {
 
   public showPanel(e: Event): void {
     e.stopPropagation();
-    this.store.dispatch(new fromRoot.TodoState.TodoPanelActions.ChangePanelVisibility());
+    this.store.dispatch(new fromRoot.TodoState.TodoPanelActions.ChangePanelVisibility(true));
   }
 }

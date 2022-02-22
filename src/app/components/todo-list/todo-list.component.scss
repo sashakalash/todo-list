@@ -5,8 +5,14 @@ mat-card {
     width: 100%;
   }
 
-  cmp-todo-item {
-    width: 100%;
-    margin: 10px;
+  mat-list-item {
+    margin-bottom: 30px;
+
+    cmp-todo-item {
+      width: 100%;
+      margin: 10px;
+    }
   }
+
+
 }

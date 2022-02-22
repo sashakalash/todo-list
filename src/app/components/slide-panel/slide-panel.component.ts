@@ -1,22 +1,14 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { Observable, tap, distinctUntilChanged, fromEvent } from 'rxjs';
+import { fromEvent, Observable } from 'rxjs';
 
 import * as fromRoot from 'src/app/store';
 @Component({
   selector: 'cmp-slide-panel',
   templateUrl: './slide-panel.component.html',
   styleUrls: ['./slide-panel.component.scss'],
-  animations: [
-    trigger('flyInOut', [
-      state('in', style({ transform: 'translateX(0)' })),
-      transition('void <=> *', [
-        style({ transform: 'translateX(-100%)' }),
-        animate('.5s ease-out')
-      ])
-    ])
-  ]
+
 })
 export class SlidePanelComponent {
 
@@ -30,10 +22,6 @@ export class SlidePanelComponent {
   constructor(
     public store: Store,
   ) {
-    this.isOpen$ = this.store.select(fromRoot.TodoState.CommonTodoStateSelectors.selectPanelState)
-      .pipe(
-        distinctUntilChanged(),
-        tap(v => console.log(v)));
   }
 
   public isOpen$: Observable<boolean>;
@@ -47,6 +35,6 @@ export class SlidePanelComponent {
   }
 
   private closePanel(): void {
-    this.store.dispatch(new fromRoot.TodoState.TodoPanelActions.ChangePanelVisibility());
+    this.store.dispatch(new fromRoot.TodoState.TodoPanelActions.ChangePanelVisibility(false));
   }
 }

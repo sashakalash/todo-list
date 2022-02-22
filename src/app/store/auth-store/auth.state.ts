@@ -5,7 +5,7 @@ import { AuthActions } from './auth-state.actions';
 import { Observable, tap } from 'rxjs';
 import { IToken } from 'src/app/core/models/token.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { USERS } from 'src/app/heroes';
+import { USERS } from 'src/app/users';
 
 const TODOS_STATE_TOKEN = new StateToken<IAuth>('auth');
 

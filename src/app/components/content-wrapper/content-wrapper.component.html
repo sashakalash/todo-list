@@ -1,5 +1,5 @@
 <cmp-header></cmp-header>
-<cmp-slide-panel>
+<cmp-slide-panel [@flyInOut]="'in'" *ngIf="isPanelOpen$ | async">
   <cmp-todo-create-form></cmp-todo-create-form>
 </cmp-slide-panel>
 <cmp-notifications-host></cmp-notifications-host>

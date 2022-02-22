@@ -3,21 +3,22 @@
     <mat-card-title>{{ userName$ | async }}</mat-card-title>
     <mat-card-subtitle>Todo List</mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content *ngIf="todos$ | async as todos">
-    <ng-container *ngIf="todos.length;else emptyListTemplate">
-      <mat-form-field appearance="fill">
-        <mat-label>Search todo:</mat-label>
-        <input matInput
-               placeholder="Start typing..."
-               #criteria
-               (input)="updateCriteria(criteria.value)">
-      </mat-form-field>
+  <ng-container *ngIf="(todos$ | async)?.length">
+    <mat-form-field appearance="fill">
+      <mat-label>Search todo:</mat-label>
+      <input matInput
+             placeholder="Start typing..."
+             #filter>
+    </mat-form-field>
+  </ng-container>
+  <mat-card-content *ngIf="filteredTodos$ | async as todoList">
+    <ng-container *ngIf="todoList.length;else emptyListTemplate">
       <mat-list #todos
                 role="list"
-                [@filterAnimation]="todosTotal"
-                *ngFor="let item of todos">
+                [@filterAnimation]="todosTotal">
         <mat-list-item role="listitem"
-                       class="item">
+                       class="item"
+                       *ngFor="let item of todoList">
           <cmp-todo-item [item]="item"></cmp-todo-item>
         </mat-list-item>
       </mat-list>

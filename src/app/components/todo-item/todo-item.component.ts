@@ -1,5 +1,5 @@
 import { ITodoListItem } from 'src/app/core/models/todo-list-item.interface';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import * as fromRoot from 'src/app/store';
 @Component({
@@ -19,6 +19,6 @@ export class TodoItemComponent {
 
   public edit(item: ITodoListItem): void {
     this.store.dispatch(new fromRoot.TodoState.CommonTodoActions.SetCurrentTodoItem(item));
-    this.store.dispatch(new fromRoot.TodoState.TodoPanelActions.ChangePanelVisibility());
+    this.store.dispatch(new fromRoot.TodoState.TodoPanelActions.ChangePanelVisibility(true));
   }
 }

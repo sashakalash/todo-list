@@ -1,10 +1,10 @@
 import { ToastComponent } from 'src/app/components/toast/toast.component';
 import { INotificationData } from 'src/app/core/models/notification-data.interface';
-import { Component, OnDestroy, ViewChild, ElementRef, ViewContainerRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { Store } from '@ngxs/store';
-import { filter, map, Observable, Subject, takeUntil, tap, switchMap, withLatestFrom, fromEvent, iif, shareReplay, distinctUntilChanged, take } from 'rxjs';
+import { Subject, takeUntil, switchMap, iif, withLatestFrom, fromEvent, tap, filter, of, defer } from 'rxjs';
 import { ITodoListItem } from 'src/app/core/models/todo-list-item.interface';
 
 import { TodoStatusEnum } from 'src/app/core/models/todo-status.enum';
@@ -14,8 +14,7 @@ import * as fromRoot from 'src/app/store';
 @Component({
   selector: 'cmp-todo-create-form',
   templateUrl: './todo-create-form.component.html',
-  styleUrls: ['./todo-create-form.component.scss'],
-  providers: [FormService]
+  styleUrls: ['./todo-create-form.component.scss']
 })
 export class TodoCreateFormComponent implements OnDestroy {
 
@@ -47,10 +46,14 @@ export class TodoCreateFormComponent implements OnDestroy {
         takeUntil(this.destroyed$),
         switchMap(() => iif(
           () => this.isEdit,
-          this.store.dispatch(new fromRoot.TodoState.CommonTodoActions.EditTodoItem(this.form.getRawValue() as ITodoListItem)),
-          this.store.dispatch(new fromRoot.TodoState.CommonTodoActions.AddTodoItem(this.form.getRawValue() as ITodoListItem))
+          defer(() => this.store.dispatch(new fromRoot.TodoState.CommonTodoActions.EditTodoItem(this.form.getRawValue() as ITodoListItem))),
+          defer(() => this.store.dispatch(new fromRoot.TodoState.CommonTodoActions.AddTodoItem(this.form.getRawValue() as ITodoListItem)))
         )),
-      ).subscribe(() => { this.showNotification(); this.closePanel(); });
+      ).subscribe(() => {
+        this.store.dispatch(new fromRoot.TodoState.CommonTodoActions.SetCurrentTodoItem(null));
+        this.showNotification();
+        this.closePanel();
+      });
     }
   }
 
@@ -60,22 +63,27 @@ export class TodoCreateFormComponent implements OnDestroy {
       .pipe(takeUntil(this.destroyed$))
       .subscribe(user => this.currentUser = user);
 
-    this.store.select(fromRoot.TodoState.CommonTodoStateSelectors.selectCurrentTodoItem)
+    this.store.select(fromRoot.TodoState.CommonTodoStateSelectors.selectPanelState)
       .pipe(
         takeUntil(this.destroyed$),
-        filter(v => !!v),
-        take(1),
-    ).subscribe(item => {
-
-      console.log(item)
+        withLatestFrom(this.store.select(fromRoot.TodoState.CommonTodoStateSelectors.selectCurrentTodoItem)),
+        filter(([isPanelOpen, item]: [boolean, ITodoListItem]) => isPanelOpen && !!item)
+      ).subscribe(([isPanelOpen, item]: [boolean, ITodoListItem]) => {
+        this.isEdit = isPanelOpen;
         this.fillForm(item);
-        this.isEdit = true;
+      });
+
+    this.form.valueChanges
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(() => {
+        this.store.dispatch(new fromRoot.FormState.FormActions.TouchedStatusChanged(this.form.untouched));
+        this.store.dispatch(new fromRoot.TodoState.CommonTodoActions.SetCurrentTodoItem(this.form.getRawValue() as ITodoListItem));
       });
   }
 
   private closePanel(): void {
-    this.form.reset();
-    this.store.dispatch(new fromRoot.TodoState.TodoPanelActions.ChangePanelVisibility());
+    this.form.reset({}, { emitEvent: false });
+    this.store.dispatch(new fromRoot.TodoState.TodoPanelActions.ChangePanelVisibility(false));
   }
 
   private fillForm(item: ITodoListItem): void {

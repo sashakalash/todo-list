@@ -1,6 +1,6 @@
-import { Observable, of, Subject, takeUntil } from 'rxjs';
+import { combineLatest, defer, fromEvent, iif, Observable, of, pluck, startWith, Subject, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
-import { Component, HostBinding, OnDestroy } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ITodoListItem } from 'src/app/core/models/todo-list-item.interface';
 import { Store } from '@ngxs/store';
 
@@ -44,47 +44,62 @@ import * as fromRoot from 'src/app/store';
     ]),
   ]
 })
-export class TodoListComponent implements OnDestroy {
+export class TodoListComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store,
-  ) {
-    this.userName$ = this.store.select(fromRoot.TodoState.CommonTodoStateSelectors.selectCurrentUser)
-        .pipe(takeUntil(this.destroyed$));
-    this._todos$ = this.store.select(fromRoot.TodoState.CommonTodoStateSelectors.selectTodos)
-      .pipe(takeUntil(this.destroyed$));
-  }
+  ) {}
 
   @HostBinding('@todos')
   public animatePage = true;
 
+  @ViewChild('filter') set filterRef(ref: ElementRef) {
+    if (ref) {
+      this._filterRef = ref;
+      this.setFilterSubscription();
+    }
+  }
+
   public todosTotal = -1;
   public userName$: Observable<string>;
   private destroyed$ = new Subject<void>();
+  public todos$: Observable<ITodoListItem[]>;
+  private _filterRef: ElementRef;
+  private filter$: Observable<any>;
+  public filteredTodos$: Observable<ITodoListItem[]>;
 
-  get todos$(): Observable<ITodoListItem[]> {
-    return this._todos$;
+  private setFilterSubscription(): void {
+    if (this._filterRef) {
+      this.filter$ = fromEvent(this._filterRef.nativeElement as HTMLElement, 'input').pipe(
+        takeUntil(this.destroyed$),
+        pluck('target', 'value'),
+        startWith('')
+      );
+
+      this.filteredTodos$ = combineLatest([
+        this.todos$,
+        this.filter$
+      ])
+        .pipe(
+          switchMap(([todos, filter]: [ITodoListItem[], string]) => iif(
+            () => !!filter,
+            defer(() => of(todos.filter(todo => todo.title.toLowerCase().includes(filter.toLowerCase())))),
+            defer(() => of(todos))
+          ))
+        );
+    }
   }
 
-  private _todos$: Observable<ITodoListItem[]> = of([]);
+  ngOnInit(): void {
+    this.userName$ = this.store.select(fromRoot.TodoState.CommonTodoStateSelectors.selectCurrentUser)
+      .pipe(takeUntil(this.destroyed$));
+
+    this.todos$ = this.store.select(fromRoot.TodoState.CommonTodoStateSelectors.selectTodos)
+      .pipe(takeUntil(this.destroyed$));
+  }
 
   ngOnDestroy(): void {
     this.destroyed$.next();
     this.destroyed$.complete();
   }
-
-  public updateCriteria(criteria: string): void {
-    // criteria = criteria ? criteria.trim() : '';
-
-    // this._todos = HEROES.filter(todo => todo.title.toLowerCase().includes(criteria.toLowerCase()));
-    // // const newTotal = this.todos.length;
-
-    // if (this.todosTotal !== newTotal) {
-    //   this.todosTotal = newTotal;
-    // } else if (!criteria) {
-    //   this.todosTotal = -1;
-    // }
-  }
-
-
 }
