@@ -1,4 +1,4 @@
 export interface INotificationData {
-  delay: number;
+  delay?: number;
   text: string;
 }

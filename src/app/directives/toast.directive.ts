@@ -1,5 +1,5 @@
 import { Directive, Input, TemplateRef, ViewContainerRef, OnInit } from '@angular/core';
-import { INotificationData } from '../core/models/notification-data.interface';
+import { INotificationData } from '../core/interfaces/notification-data.interface';
 @Directive({
   selector: '[appToast]'
 })

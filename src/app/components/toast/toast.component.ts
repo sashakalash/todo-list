@@ -1,6 +1,8 @@
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, Input } from '@angular/core';
-import { INotificationData } from 'src/app/core/models/notification-data.interface';
+import { INotificationData } from 'src/app/core/interfaces/notification-data.interface';
+import { INotification } from 'src/app/core/interfaces/notification.interface';
 
 const DEFAULT_NOTIFICATION_DATA: INotificationData = {
   delay: 3000,
@@ -26,9 +28,9 @@ const DEFAULT_NOTIFICATION_DATA: INotificationData = {
     ])
   ]
 })
-export class ToastComponent {
+export class ToastComponent implements INotification {
 
   @Input() data: INotificationData = DEFAULT_NOTIFICATION_DATA;
 
-  constructor() { }
+  constructor(public notificationService: NotificationService) {}
 }

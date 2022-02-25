@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { IToken } from '../models/token.interface';
-import { IAuth } from './../models/auth.interface';
+import { IToken } from '../interfaces/token.interface';
+import { IAuth } from '../interfaces/auth.interface';
 @Injectable({
   providedIn: 'root'
 })

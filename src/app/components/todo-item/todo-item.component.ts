@@ -1,5 +1,5 @@
-import { ITodoListItem } from 'src/app/core/models/todo-list-item.interface';
-import { Component, Input, OnInit } from '@angular/core';
+import { ITodoListItem } from 'src/app/core/interfaces/todo-list-item.interface';
+import { Component, Input } from '@angular/core';
 import { Store } from '@ngxs/store';
 import * as fromRoot from 'src/app/store';
 @Component({

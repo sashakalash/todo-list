@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
-import { IAuth } from 'src/app/core/models/auth.interface';
+import { IAuth } from 'src/app/core/interfaces/auth.interface';
 import { AuthActions } from './auth-state.actions';
 import { Observable, tap } from 'rxjs';
-import { IToken } from 'src/app/core/models/token.interface';
+import { IToken } from 'src/app/core/interfaces/token.interface';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { USERS } from 'src/app/users';
 

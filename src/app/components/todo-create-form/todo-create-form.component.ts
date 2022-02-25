@@ -1,11 +1,11 @@
 import { ToastComponent } from 'src/app/components/toast/toast.component';
-import { INotificationData } from 'src/app/core/models/notification-data.interface';
+import { INotificationData } from 'src/app/core/interfaces/notification-data.interface';
 import { Component, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { Store } from '@ngxs/store';
 import { Subject, takeUntil, switchMap, iif, withLatestFrom, fromEvent, tap, filter, of, defer } from 'rxjs';
-import { ITodoListItem } from 'src/app/core/models/todo-list-item.interface';
+import { ITodoListItem } from 'src/app/core/interfaces/todo-list-item.interface';
 
 import { TodoStatusEnum } from 'src/app/core/models/todo-status.enum';
 import { FormService } from 'src/app/core/services/form.service';

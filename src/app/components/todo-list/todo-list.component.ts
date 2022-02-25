@@ -1,7 +1,7 @@
 import { combineLatest, defer, fromEvent, iif, Observable, of, pluck, startWith, Subject, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 import { Component, HostBinding, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ITodoListItem } from 'src/app/core/models/todo-list-item.interface';
+import { ITodoListItem } from 'src/app/core/interfaces/todo-list-item.interface';
 import { Store } from '@ngxs/store';
 
 import * as fromRoot from 'src/app/store';

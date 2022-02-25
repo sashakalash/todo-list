@@ -1,4 +1,4 @@
-import { ITodoListItem } from 'src/app/core/models/todo-list-item.interface';
+import { ITodoListItem } from 'src/app/core/interfaces/todo-list-item.interface';
 
 export enum TodoActionsTypes {
   ADD_ONE = '[TodoList] Add TodoItem',

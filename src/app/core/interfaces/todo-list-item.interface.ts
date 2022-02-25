@@ -1,4 +1,4 @@
-import { TodoStatusEnum } from './todo-status.enum'
+import { TodoStatusEnum } from '../models/todo-status.enum';
 
 export interface ITodoListItem {
   id: number,

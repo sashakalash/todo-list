@@ -1,0 +1,10 @@
+<div class="notification-body"
+     *appToast="data; let text = text">
+  <div class="text">
+    <p>{{ text }}</p>
+  </div>
+  <div class="actions-btns">
+    <button mat-raised-button color="primary" (click)="confirm()">OK</button>
+    <button mat-raised-button color="warn" (click)="cancel()">Cancel</button>
+  </div>
+</div>

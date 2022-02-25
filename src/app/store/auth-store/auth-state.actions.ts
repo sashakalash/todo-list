@@ -1,4 +1,4 @@
-import { IAuth } from './../../core/models/auth.interface';
+import { IAuth } from '../../core/interfaces/auth.interface';
 
 export enum AuthActionsTypes {
   LOGIN = '[Auth] Login',

@@ -1,5 +1,5 @@
 import { Store } from '@ngxs/store';
-import { IAuth } from './../../core/models/auth.interface';
+import { IAuth } from '../../core/interfaces/auth.interface';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';

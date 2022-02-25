@@ -1,7 +1,7 @@
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Action, State, StateContext, StateToken } from '@ngxs/store';
-import { ITodoListItem } from '../../core/models/todo-list-item.interface';
+import { ITodoListItem } from '../../core/interfaces/todo-list-item.interface';
 import { CommonTodoActions, TodoPanelActions } from './todo-state.actions';
 import { patch, removeItem, insertItem, updateItem } from '@ngxs/store/operators';
 

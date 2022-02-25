@@ -4,5 +4,5 @@
   <div class="text">
     <p>{{ text }}</p>
   </div>
-  <mat-icon>close</mat-icon>
+  <mat-icon (click)="notificationService.hideNotification()">close</mat-icon>
 </div>
